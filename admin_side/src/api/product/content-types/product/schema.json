@@ -1,0 +1,90 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product",
+    "description": "A clothing item — sizes, colors, prices and stock are added under Size & color"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "description": "Product name customers see on the website"
+    },
+    "link_name": {
+      "type": "uid",
+      "targetField": "name",
+      "required": false,
+      "description": "Filled in automatically — used for the product page link",
+      "pluginOptions": {
+        "content-manager": {
+          "visible": false
+        }
+      }
+    },
+    "description": {
+      "type": "text",
+      "description": "A few sentences about this product"
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Main picture customers see for this product"
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["videos"],
+      "description": "Optional product video shown in the gallery"
+    },
+    "highlight_on_homepage": {
+      "type": "boolean",
+      "default": false,
+      "description": "Tick to show this product on the homepage"
+    },
+    "mark_as_new": {
+      "type": "boolean",
+      "default": false,
+      "description": "Tick to show a \"New\" label on the website"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "products",
+      "description": "Pick an existing shop section from the list"
+    },
+    "sizes_and_colors": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-variant.product-variant",
+      "mappedBy": "product",
+      "description": "Managed under Size & color — not edited on this form",
+      "pluginOptions": {
+        "content-manager": {
+          "visible": false
+        }
+      }
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "product",
+      "description": "Customer reviews for this product",
+      "pluginOptions": {
+        "content-manager": {
+          "visible": false
+        }
+      }
+    }
+  }
+}

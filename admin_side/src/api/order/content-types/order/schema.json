@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order",
+    "description": "When a customer orders online — update the status as you process it"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "order_reference": {
+      "type": "string",
+      "unique": true,
+      "description": "Order number (created automatically, e.g. TW-20260619-1234)"
+    },
+    "customer_name": {
+      "type": "string",
+      "required": true,
+      "description": "Customer's full name"
+    },
+    "phone": {
+      "type": "string",
+      "required": true,
+      "description": "Phone or WhatsApp number"
+    },
+    "delivery_address": {
+      "type": "text",
+      "description": "Where to deliver (if they gave an address)"
+    },
+    "customer_notes": {
+      "type": "text",
+      "description": "Anything the customer wrote in the notes box"
+    },
+    "order_status": {
+      "type": "enumeration",
+      "enum": ["placed", "paid", "pending", "completed", "cancelled"],
+      "default": "placed",
+      "required": true,
+      "description": "Placed = new order · Paid = customer started MoMo payment · Pending / Completed = in progress or done · Cancelled = stock goes back"
+    },
+    "stock_deducted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Filled in automatically — true after stock has been removed for this order"
+    },
+    "subtotal": {
+      "type": "decimal",
+      "required": true,
+      "description": "Total amount in RWF (before any changes)"
+    },
+    "total": {
+      "type": "decimal",
+      "required": true,
+      "description": "Final total in RWF"
+    },
+    "what_they_ordered": {
+      "type": "component",
+      "repeatable": true,
+      "component": "order.order-item",
+      "required": true,
+      "description": "List of products in this order"
+    }
+  }
+}
