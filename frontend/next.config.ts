@@ -11,7 +11,7 @@ const strapiMediaHost = strapiHost.endsWith(".strapiapp.com")
   : null;
 
 const nextConfig: NextConfig = {
-  output: "export",
+  output: "standalone",
   images: {
     unoptimized: true,
     // Next.js 16 blocks localhost/private IPs (SSRF protection). Required for local Strapi.
