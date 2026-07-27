@@ -4,11 +4,14 @@ import AuthLogo from "./extensions/tigerwear-logo.png";
 import MenuLogo from "./extensions/tigerwear-logo.png";
 import Favicon from "./extensions/favicon.ico";
 import { tigerWearDarkColors, tigerWearLightColors } from "./theme";
-import { installSelectOnlyProductRelations } from "./select-only-relations";
-import { installReadOnlyAuditUi } from "./read-only-audit-ui";
 import { Calendar } from "@strapi/icons";
 import { DataTransferListActions } from "./data-transfer-actions";
 import { TrackListSelection } from "./order-selection-store";
+import {
+  installReadOnlyAuditUi,
+  installRequireChangeReason,
+  installSelectOnlyProductRelations,
+} from "./select-only-relations";
 
 export default {
   config: {
@@ -55,6 +58,7 @@ export default {
     }
     installSelectOnlyProductRelations();
     installReadOnlyAuditUi();
+    installRequireChangeReason();
 
     // Export / Import (+ order totals on Orders) on each content table
     app.getPlugin("content-manager")?.injectComponent("listView", "actions", {
@@ -63,9 +67,10 @@ export default {
     });
 
     // Sync checkbox selection → export scope / order totals
-    app.getPlugin("content-manager")?.apis?.addBulkAction?.([
-      TrackListSelection as never,
-    ]);
+    const contentManagerApis = app.getPlugin("content-manager")?.apis as
+      | { addBulkAction?: (actions: unknown[]) => void }
+      | undefined;
+    contentManagerApis?.addBulkAction?.([TrackListSelection]);
   },
   register(app: StrapiApp) {
     const indexRoute = app.router.routes.find(({ index }) => index);
@@ -84,8 +89,8 @@ export default {
         defaultMessage: "Stock history",
       },
       Component: async () => {
-        const { InventoryHistory } = await import("./InventoryHistory");
-        return InventoryHistory;
+        const { InventoryHistory } = await import("./Homepage");
+        return { default: InventoryHistory };
       },
       permissions: [],
     });
@@ -98,8 +103,8 @@ export default {
         defaultMessage: "Audit record",
       },
       Component: async () => {
-        const { AuditRecordView } = await import("./AuditRecordView");
-        return AuditRecordView;
+        const { AuditRecordView } = await import("./Homepage");
+        return { default: AuditRecordView };
       },
       permissions: [],
     });
