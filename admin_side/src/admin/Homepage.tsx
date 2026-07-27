@@ -18,6 +18,7 @@ import {
 } from "@strapi/design-system";
 import {
   ChevronRight,
+  Clock,
   ExternalLink,
   GridFour,
   Layout,
@@ -31,6 +32,12 @@ import { Link as RouterLink } from "react-router-dom";
 const STOREFRONT_URL = "http://localhost:3000";
 const HOMEPAGE_EDIT_PATH =
   "/content-manager/single-types/api::homepage.homepage";
+const PRODUCTS_PATH =
+  "/content-manager/collection-types/api::product.product";
+const VARIANTS_PATH =
+  "/content-manager/collection-types/api::product-variant.product-variant";
+const ORDERS_PATH =
+  "/content-manager/collection-types/api::order.order";
 
 type HeroSlidePreview = {
   tag?: string;
@@ -58,13 +65,13 @@ const shortcuts = [
   {
     title: "Products",
     subtitle: "Catalog names, photos, and homepage flags",
-    to: "/content-manager/collection-types/api::product.product",
+    to: PRODUCTS_PATH,
     icon: Shirt,
   },
   {
     title: "Size & color",
     subtitle: "Prices, stock, and link each row to a product",
-    to: "/content-manager/collection-types/api::product-variant.product-variant",
+    to: VARIANTS_PATH,
     icon: Pencil,
   },
   {
@@ -74,9 +81,15 @@ const shortcuts = [
     icon: GridFour,
   },
   {
+    title: "Stock history",
+    subtitle: "Movements, restocks, and price changes",
+    to: "/inventory-history",
+    icon: Clock,
+  },
+  {
     title: "Orders",
     subtitle: "Customer orders and fulfilment",
-    to: "/content-manager/collection-types/api::order.order",
+    to: ORDERS_PATH,
     icon: ShoppingCart,
   },
 ] as const;
@@ -212,7 +225,6 @@ export function Homepage() {
 
         <Layouts.Content>
           <Flex direction="column" alignItems="stretch" gap={6} paddingBottom={10}>
-            {/* Storefront preview — same panel style as Settings pages */}
             <Flex
               direction="column"
               alignItems="stretch"
@@ -348,7 +360,6 @@ export function Homepage() {
               </Box>
             </Flex>
 
-            {/* Shortcuts — ContentBox grid like other admin areas */}
             <Box>
               <Box paddingBottom={4}>
                 <Typography variant="delta" textColor="neutral800">
