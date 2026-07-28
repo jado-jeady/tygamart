@@ -383,3 +383,6 @@ export function Homepage() {
     </Layouts.Root>
   );
 }
+
+export { InventoryHistory } from './InventoryHistory';
+export { AuditRecordView } from './AuditRecordView';

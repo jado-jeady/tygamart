@@ -140,7 +140,7 @@ export function AuditRecordView() {
   return (
     <Main>
       <Page.Title>
-        View {LABEL_BY_SHORT[type] ?? "record"}
+        {`View ${LABEL_BY_SHORT[type] ?? "record"}`}
       </Page.Title>
 
       <Layouts.Content>

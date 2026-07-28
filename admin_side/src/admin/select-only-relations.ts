@@ -68,3 +68,6 @@ export function installSelectOnlyProductRelations() {
     return result;
   };
 }
+
+export { installReadOnlyAuditUi } from './read-only-audit-ui';
+export { installRequireChangeReason } from './require-change-reason';
