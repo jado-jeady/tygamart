@@ -13,7 +13,6 @@ const strapiMediaHost = strapiHost.endsWith(".strapiapp.com")
 const nextConfig: NextConfig = {
   output: "standalone",
   images: {
-    unoptimized: true,
     // Next.js 16 blocks localhost/private IPs (SSRF protection). Required for local Strapi.
     dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
     remotePatterns: [
@@ -37,6 +36,11 @@ const nextConfig: NextConfig = {
             },
           ]
         : []),
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
       {
         protocol: "https",
         hostname: "images.unsplash.com",
